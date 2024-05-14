@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: "gdsc-forum"
+
+server:
+  port: 8080

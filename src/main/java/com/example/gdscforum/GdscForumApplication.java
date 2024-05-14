@@ -1,0 +1,15 @@
+package com.example.gdscforum;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class GdscForumApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(GdscForumApplication.class, args);
+
+        System.out.println("Hello World");
+    }
+
+}
