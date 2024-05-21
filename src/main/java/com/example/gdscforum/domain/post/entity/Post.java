@@ -25,23 +25,23 @@ public class Post {
     @Column(name = "title", length = 2048, nullable = false)
     private String title;
 
-    @Column(name = "origin_url", length = 2048, nullable = false)
+    @Column(name = "content", length = 2048, nullable = false)
     private String content;
 
     // TODO: BaseEntity로 설정하기
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "update_at", nullable = false)
-    private LocalDateTime updateAt;
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
 
     @Builder
-    public Post(String title, String content, LocalDateTime createdAt, LocalDateTime updateAt) {
+    public Post(String title, String content, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.title = title;
         this.content = content;
         this.createdAt = createdAt;
-        this.updateAt = updateAt;
+        this.updatedAt = updatedAt;
     }
 
 }

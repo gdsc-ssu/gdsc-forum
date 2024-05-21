@@ -19,7 +19,7 @@ public class PostDto {
 
     private LocalDateTime createdAt;
 
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
 
 
     public static PostDto from(Post post) {
@@ -27,7 +27,7 @@ public class PostDto {
             .title(post.getTitle())
             .content(post.getContent())
             .createdAt(post.getCreatedAt())
-            .updateAt(post.getUpdateAt())
+            .updatedAt(post.getUpdatedAt())
             .build();
     }
 }

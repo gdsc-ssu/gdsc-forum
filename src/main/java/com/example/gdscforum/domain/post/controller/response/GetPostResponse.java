@@ -16,14 +16,14 @@ public class GetPostResponse {
     private String title;
     private String content;
     private LocalDateTime createdAt;
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
 
     public static GetPostResponse from(Post post) {
         return GetPostResponse.builder()
             .title(post.getTitle())
             .content(post.getContent())
             .createdAt(post.getCreatedAt())
-            .updateAt(post.getUpdateAt())
+            .updatedAt(post.getUpdatedAt())
             .build();
     }
 }
