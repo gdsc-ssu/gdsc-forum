@@ -29,7 +29,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(
                 authorize -> authorize
                     // 현재는 모든 요청 허용
-                    .requestMatchers("/dev/ping").permitAll()
+                    .requestMatchers("/post").permitAll()
                     .anyRequest().permitAll()
             );
 
