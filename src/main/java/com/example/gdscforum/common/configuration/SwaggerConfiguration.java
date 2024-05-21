@@ -65,7 +65,7 @@ public class SwaggerConfiguration {
             .security(Collections.singletonList(new SecurityRequirement().addList(securityRequirementName)))
             .components(new Components().addSecuritySchemes(securityRequirementName, securityScheme))
             .info(new Info()
-                .title("URL Shortener API")
+                .title("GDSC Forum API")
                 .description(description)
                 .version("0.0.1")
             )
