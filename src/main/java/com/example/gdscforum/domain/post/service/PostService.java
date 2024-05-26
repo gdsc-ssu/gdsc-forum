@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class PostService {
@@ -33,5 +36,11 @@ public class PostService {
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
                 .build();
+    }
+
+    public List<PostDto> getAllPost() {
+        List<PostDto> postDtos = postRepository.findAll().stream().map(PostDto::from).collect(Collectors.toList());
+
+        return postDtos;
     }
 }

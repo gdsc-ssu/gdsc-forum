@@ -12,6 +12,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/posts")
 @RestController
@@ -44,5 +46,18 @@ public class PostController {
     public Response<PostDto> getPost(@NotNull @PathVariable("post_id") Long id) {
         PostDto postDto = postService.getPost(id);
         return Response.data(postDto);
+    }
+
+    @Operation(
+            summary = "Post 전체 조회",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK"),
+                    @ApiResponse(responseCode = "500", description = "INTERNAL_SERVER_ERROR")
+            }
+    )
+    @GetMapping
+    public Response<List<PostDto>> getAllPost() {
+        List<PostDto> postDtos = postService.getAllPost();
+        return Response.data(postDtos);
     }
 }
