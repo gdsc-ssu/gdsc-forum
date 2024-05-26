@@ -1,5 +1,6 @@
 package com.example.gdscforum.domain.post.application.service;
 
+import com.example.gdscforum.domain.post.application.exception.PostNotFoundException;
 import com.example.gdscforum.domain.post.presentation.response.PostGetResponse;
 import com.example.gdscforum.domain.post.persistence.entity.PostEntity;
 import com.example.gdscforum.domain.post.persistence.repository.PostJpaRepository;
@@ -19,7 +20,8 @@ public class PostRetrieveService {
 
 	public PostGetResponse getById(Long id) {
 		// FIXME: jpa 엔티티와의 강결합
-		PostEntity resultEntity = postJpaRepository.findById(id).orElseThrow();
+		PostEntity resultEntity = postJpaRepository.findById(id)
+				.orElseThrow(PostNotFoundException::new);
 
 		return PostGetResponse.of(resultEntity);
 	}
