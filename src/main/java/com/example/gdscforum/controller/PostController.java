@@ -1,22 +1,23 @@
-package com.example.gdscforum.domain.test.controller;
+package com.example.gdscforum.controller;
 
 import com.example.gdscforum.common.dto.Response;
-import com.example.gdscforum.domain.test.controller.response.TestResponse;
-import com.example.gdscforum.domain.test.dto.TestDto;
-import com.example.gdscforum.domain.test.service.TestService;
+import com.example.gdscforum.controller.response.GetPostResponse;
+import com.example.gdscforum.entity.dto.PostDto;
+import com.example.gdscforum.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/test")
-@Tag(name = "프로젝트 셋업", description = "프로젝트 1주차 api 테스트")
-public class Controller {
-    private final TestService testService;
+@RequestMapping("/post")
+@Tag(name = "게시글 조회", description = "프로젝트 1주차 api 테스트")
+public class PostController {
+    private final PostService postService;
 
     @Operation(
             summary = "단일 게시글 search",
@@ -26,8 +27,8 @@ public class Controller {
             }
     )
     @GetMapping("/search/{id}")
-    public Response<TestResponse> get(@NotBlank @PathVariable("id") Long ID) {
-        TestDto testDto = testService.get(ID);
-        return Response.data(TestResponse.from(testDto));
+    public Response<GetPostResponse> get(@PathVariable("id") Integer ID) {
+        PostDto postDto = postService.getPostById(ID);
+        return Response.data(GetPostResponse.from(postDto));
     }
 }

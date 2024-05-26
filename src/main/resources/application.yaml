@@ -1,5 +1,4 @@
 spring:
-  # H2 Database ??
   datasource:
     driver-class-name: org.h2.Driver
     url: 'jdbc:h2:mem:test'     # H2 DB (In-Memory Mode)
@@ -26,9 +25,9 @@ spring:
 
   sql:
     init:
-      mode: always  # ddl-auto: none, H2는 필요없음(어차피 사라지기 때문)
-#      schema-locations: classpath:db-init-scripts/schema.sql
-#      data-locations: classpath:db-init-scripts/data.sql
+     mode: always  # ddl-auto: none, H2는 필요없음(어차피 사라지기 때문)
+     schema-locations: classpath:db-init-scripts/schema.sql
+     data-locations: classpath:db-init-scripts/data.sql
 
 #logging:
 #  pattern:

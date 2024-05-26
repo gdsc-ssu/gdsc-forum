@@ -1,4 +1,4 @@
-package com.example.gdscforum.domain.test.entity;
+package com.example.gdscforum.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -13,12 +13,11 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "Post")
-public class PostEntity {
+@Table(name = "Posts")
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    private Integer id;
 
     @NotBlank
     @Column(name = "title", length = 2048, nullable = false)
@@ -34,13 +33,4 @@ public class PostEntity {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
-
-    @Builder
-    public PostEntity(Long id, String title, String content, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.updatedAt = updatedAt;
-        this.createdAt = createdAt;
-    }
 }
