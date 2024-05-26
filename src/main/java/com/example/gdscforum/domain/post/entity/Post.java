@@ -1,5 +1,6 @@
 package com.example.gdscforum.domain.post.entity;
 
+import com.example.gdscforum.domain.post.dto.PostDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,6 +33,14 @@ public class Post {
     public Post(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    //Entity to DTO 변환 메서드
+    public static PostDto toDto(Post post) {
+        return PostDto.builder()
+                .title(post.getTitle())
+                .content(post.getContent())
+                .build();
     }
 
     @PrePersist

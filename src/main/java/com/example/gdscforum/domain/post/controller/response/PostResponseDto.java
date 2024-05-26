@@ -1,4 +1,4 @@
-package com.example.gdscforum.domain.post.dto;
+package com.example.gdscforum.domain.post.controller.response;
 
 import com.example.gdscforum.domain.post.entity.Post;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,7 +28,7 @@ public class PostResponseDto {
     private Timestamp updatedAt;
 
     @Builder
-    public PostResponseDto(Long id, String title, String content, String authorName, Timestamp createdAt, Timestamp updatedAt) {
+    public PostResponseDto(Long id, String title, String content, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.title = title;
         this.content = content;
