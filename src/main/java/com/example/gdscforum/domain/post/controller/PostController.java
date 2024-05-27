@@ -2,6 +2,7 @@ package com.example.gdscforum.domain.post.controller;
 
 import com.example.gdscforum.common.dto.Response;
 import com.example.gdscforum.domain.post.controller.request.CreatePostRequest;
+import com.example.gdscforum.domain.post.controller.request.UpdatePostRequest;
 import com.example.gdscforum.domain.post.dto.PostDto;
 import com.example.gdscforum.domain.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -59,5 +60,20 @@ public class PostController {
     public Response<List<PostDto>> getAllPost() {
         List<PostDto> postDtos = postService.getAllPost();
         return Response.data(postDtos);
+    }
+
+    @Operation(
+            summary = "Post 수정",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK"),
+                    @ApiResponse(responseCode = "404", description = "POST_NOT_FOUND"),
+                    @ApiResponse(responseCode = "500", description = "INTERNAL_SERVER_ERROR")
+            }
+    )
+    @PutMapping("/{post_id}")
+    public Response<PostDto> updatePost(@NotNull @PathVariable("post_id") Long id,
+                                        @Valid @RequestBody UpdatePostRequest request) {
+        PostDto postDto = postService.updatePost(id, request);
+        return Response.data(postDto);
     }
 }

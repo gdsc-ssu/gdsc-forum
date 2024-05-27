@@ -1,6 +1,7 @@
 package com.example.gdscforum.domain.post.service;
 
 import com.example.gdscforum.domain.post.controller.request.CreatePostRequest;
+import com.example.gdscforum.domain.post.controller.request.UpdatePostRequest;
 import com.example.gdscforum.domain.post.dto.PostDto;
 import com.example.gdscforum.domain.post.entity.Post;
 import com.example.gdscforum.domain.post.exception.PostNotFoundException;
@@ -32,7 +33,7 @@ public class PostService {
         return PostDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
-                .content(post.getTitle())
+                .content(post.getContent())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
                 .build();
@@ -42,5 +43,15 @@ public class PostService {
         List<PostDto> postDtos = postRepository.findAll().stream().map(PostDto::from).collect(Collectors.toList());
 
         return postDtos;
+    }
+
+    @Transactional
+    public PostDto updatePost(Long id, UpdatePostRequest request) {
+        Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
+
+        post.setTitle(request.getTitle());
+        post.setContent(request.getContent());
+
+        return PostDto.from(post);
     }
 }
