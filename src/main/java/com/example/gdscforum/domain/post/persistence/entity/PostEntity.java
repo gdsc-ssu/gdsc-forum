@@ -2,10 +2,7 @@ package com.example.gdscforum.domain.post.persistence.entity;
 
 import com.example.gdscforum.common.entity.BaseTimeEntity;
 import com.example.gdscforum.domain.post.presentation.request.PostCreateRequest;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -14,6 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(name = "post")
 public class PostEntity extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,5 +25,15 @@ public class PostEntity extends BaseTimeEntity {
 				.title(request.getTitle())
 				.content(request.getContent())
 				.build();
+	}
+
+	public void update(
+		String title,
+		String content
+	) {
+		if (title != null && content != null) {
+			this.title = title;
+			this.content = content;
+		}
 	}
 }
