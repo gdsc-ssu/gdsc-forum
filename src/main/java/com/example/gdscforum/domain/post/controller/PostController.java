@@ -61,4 +61,15 @@ public class PostController {
 
         return Response.data(GetPostResponse.from(post));
     }
+
+    @Operation(
+        summary = "게시글 삭제",
+        description = "게시글을 삭제합니다."
+    )
+    @DeleteMapping("/{id}")
+    public Response<String> deletePost(@PathVariable Integer id) {
+        postService.deletePost(id);
+
+        return Response.data("OK");
+    }
 }
