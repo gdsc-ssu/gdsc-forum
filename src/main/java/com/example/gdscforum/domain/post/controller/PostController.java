@@ -50,4 +50,15 @@ public class PostController {
 
         return Response.data(GetPostResponse.from(post));
     }
+
+    @Operation(
+        summary = "게시글 수정",
+        description = "게시글을 수정합니다."
+    )
+    @PutMapping("/{id}")
+    public Response<GetPostResponse> updatePost(@PathVariable Integer id, @Valid @RequestBody CreatePostRequest request) {
+        PostDto post = postService.updatePost(id, request.getTitle(), request.getContent());
+
+        return Response.data(GetPostResponse.from(post));
+    }
 }

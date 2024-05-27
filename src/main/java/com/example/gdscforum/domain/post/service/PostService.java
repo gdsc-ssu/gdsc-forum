@@ -36,4 +36,18 @@ public class PostService {
 
         return PostDto.from(post);
     }
+
+    @Transactional
+    public PostDto updatePost(Integer id, String title, String content) {
+        Post post =  postRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+
+        post.setTitle(title);
+        post.setContent(content);
+        post.setUpdatedAt(LocalDateTime.now());
+
+        postRepository.save(post);
+
+        return PostDto.from(post);
+    }
 }
