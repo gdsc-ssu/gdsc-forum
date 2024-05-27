@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +35,8 @@ public class PostService {
     @Transactional
     public PostDto createPost(PostDto postDto) {
         Post postEntity = PostDto.toEntity(postDto);
+        postEntity.setCreatedAt(LocalDateTime.now());
+        postEntity.setUpdatedAt(LocalDateTime.now());
         Post savedPost = postRepository.save(postEntity);
         return PostDto.from(savedPost);
     }

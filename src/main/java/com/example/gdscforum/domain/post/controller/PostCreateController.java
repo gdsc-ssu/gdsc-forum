@@ -1,6 +1,7 @@
 package com.example.gdscforum.domain.post.controller;
 
 import com.example.gdscforum.common.dto.Response;
+import com.example.gdscforum.domain.post.controller.request.CreatePostRequest;
 import com.example.gdscforum.domain.post.controller.response.CreatePostResponse;
 import com.example.gdscforum.domain.post.entity.dto.PostDto;
 import com.example.gdscforum.domain.post.service.PostService;
@@ -25,8 +26,9 @@ public class PostCreateController {
                     @ApiResponse(responseCode = "500", description = "INTERNAL_SERVER_ERROR")
             }
     )
-    @PostMapping()
-    public Response<CreatePostResponse> createPost(@Valid @RequestBody PostDto postDto) {
+    @PostMapping
+    public Response<CreatePostResponse> createPost(@Valid @RequestBody CreatePostRequest createPostRequest) {
+        PostDto postDto = PostDto.fromCreateRequest(createPostRequest);
         PostDto createdPost = postService.createPost(postDto);
         return Response.data(CreatePostResponse.from(createdPost));
     }

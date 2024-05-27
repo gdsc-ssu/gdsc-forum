@@ -27,7 +27,7 @@ public class PostController {
                     @ApiResponse(responseCode = "500", description = "INTERNAL_SERVER_ERROR")
             }
     )
-    @GetMapping("/search/{id}")
+    @GetMapping("/{id}")
     public Response<GetPostResponse> getPosts(@PathVariable("id") Long id) {
         PostDto postDto = postService.getPostById(id);
         return Response.data(GetPostResponse.from(postDto));
@@ -40,7 +40,7 @@ public class PostController {
                     @ApiResponse(responseCode = "500", description = "INTERNAL_SERVER_ERROR")
             }
     )
-    @GetMapping("/search")
+    @GetMapping()
     public Response<List<GetPostResponse>> getAllPosts() {
         List<PostDto> postDtos = postService.getAllPosts();
         List<GetPostResponse> responses = postDtos.stream()

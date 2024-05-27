@@ -1,5 +1,6 @@
 package com.example.gdscforum.domain.post.entity.dto;
 
+import com.example.gdscforum.domain.post.controller.request.CreatePostRequest;
 import com.example.gdscforum.domain.post.entity.Post;
 import lombok.*;
 
@@ -29,11 +30,17 @@ public class PostDto {
 
     public static Post toEntity(PostDto postDto) {
         return Post.builder()
-                .id(postDto.getId())
                 .title(postDto.getTitle())
                 .content(postDto.getContent())
                 .createdAt(postDto.getCreatedAt())
                 .updatedAt(postDto.getUpdatedAt())
+                .build();
+    }
+
+    public static PostDto fromCreateRequest(CreatePostRequest request) {
+        return PostDto.builder()
+                .title(request.getTitle())
+                .content(request.getContent())
                 .build();
     }
 }
