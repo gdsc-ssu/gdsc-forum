@@ -47,4 +47,17 @@ public class PostCreateController {
         return Response.data(GetPostResponse.from(post));
     }
 
+    @Operation(
+            summary = "게시글 삭제",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "ok"),
+                    @ApiResponse(responseCode = "500", description = "INTERNAL_SERVER_ERROR")
+            }
+    )
+    @DeleteMapping("/{id}")
+    public Response<String> updatePost(@PathVariable("id") Long id){
+        postService.deletePost(id);
+        return Response.data("ok");
+    }
+
 }
