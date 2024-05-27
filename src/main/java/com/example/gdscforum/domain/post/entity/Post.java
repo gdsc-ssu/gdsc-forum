@@ -1,18 +1,19 @@
 package com.example.gdscforum.domain.post.entity;
 
+import com.example.gdscforum.domain.post.entity.dto.PostDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
-@Table(name = "posts")
+@Table(name = "post")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,5 +32,4 @@ public class Post {
 
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
-
 }

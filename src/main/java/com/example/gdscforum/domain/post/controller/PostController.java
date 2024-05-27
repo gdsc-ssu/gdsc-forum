@@ -10,12 +10,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/posts")
 @Tag(name = "게시글 조회", description = "프로젝트 1주차")
 public class PostController {
-    private final PostService PostService;
+    private final PostService postService;
 
     @Operation(
             summary = "단일 게시글 search",
@@ -25,12 +28,11 @@ public class PostController {
             }
     )
     @GetMapping("/search/{id}")
-    public Response<GetPostResponse> GetPosts(@PathVariable("id") Long ID) {
-        PostDto postDto = PostService.getPostById(ID);
+    public Response<GetPostResponse> getPosts(@PathVariable("id") Long id) {
+        PostDto postDto = postService.getPostById(id);
         return Response.data(GetPostResponse.from(postDto));
     }
 
-    /*
     @Operation(
             summary = "전체 게시글 search",
             responses = {
@@ -39,12 +41,11 @@ public class PostController {
             }
     )
     @GetMapping("/search")
-    public Response<GetPostResponse> GetAllPosts() {
+    public Response<List<GetPostResponse>> getAllPosts() {
         List<PostDto> postDtos = postService.getAllPosts();
         List<GetPostResponse> responses = postDtos.stream()
                 .map(GetPostResponse::from)
-                .toList();
+                .collect(Collectors.toList());
         return Response.data(responses);
     }
-     */
 }

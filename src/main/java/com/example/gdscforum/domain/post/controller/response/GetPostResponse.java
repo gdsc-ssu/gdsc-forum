@@ -7,11 +7,9 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-import static lombok.AccessLevel.PRIVATE;
-
 @Getter
 @AllArgsConstructor
-@Builder(access = PRIVATE)
+@Builder
 public class GetPostResponse {
     private Long id;
     private String title;
@@ -23,7 +21,7 @@ public class GetPostResponse {
         return GetPostResponse.builder()
                 .id(postDto.getId())
                 .title(postDto.getTitle())
-                .content(postDto.getTitle())
+                .content(postDto.getContent())
                 .createdAt(postDto.getCreatedAt())
                 .updatedAt(postDto.getUpdatedAt())
                 .build();
