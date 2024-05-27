@@ -76,4 +76,19 @@ public class PostController {
         PostDto postDto = postService.updatePost(id, request);
         return Response.data(postDto);
     }
+
+    @Operation(
+            summary = "Post 삭제",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK"),
+                    @ApiResponse(responseCode = "404", description = "POST_NOT_FOUND"),
+                    @ApiResponse(responseCode = "500", description = "INTERNAL_SERVER_ERROR")
+            }
+    )
+    @DeleteMapping("/{post_id}")
+    public Response<String> deletePost(@NotNull @PathVariable("post_id") Long id) {
+        postService.deletePost(id);
+
+        return Response.data("OK");
+    }
 }
