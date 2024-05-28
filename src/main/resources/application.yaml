@@ -16,7 +16,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create        # (none, create, create-drop, update, validate)
+      ddl-auto: none        # (none, create, create-drop, update, validate)
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect    # Dialect: 데이터베이스에 대한 특정 SQL 문법과 데이터 타입 매핑에 대한 규칙을 제공

@@ -1,19 +1,17 @@
-package com.example.gdscforum.controller.response;
+package com.example.gdscforum.domain.post.controller.response;
 
-import com.example.gdscforum.entity.dto.PostDto;
+import com.example.gdscforum.domain.post.entity.dto.PostDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-import static lombok.AccessLevel.PRIVATE;
-
 @Getter
 @AllArgsConstructor
-@Builder(access = PRIVATE)
+@Builder
 public class GetPostResponse {
-    private int id;
+    private Long id;
     private String title;
     private String content;
     private LocalDateTime createdAt;
@@ -23,7 +21,7 @@ public class GetPostResponse {
         return GetPostResponse.builder()
                 .id(postDto.getId())
                 .title(postDto.getTitle())
-                .content(postDto.getTitle())
+                .content(postDto.getContent())
                 .createdAt(postDto.getCreatedAt())
                 .updatedAt(postDto.getUpdatedAt())
                 .build();
