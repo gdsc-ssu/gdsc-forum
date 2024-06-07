@@ -1,17 +1,19 @@
-package com.example.gdscforum.domain.auth.service;
+package com.example.gdscforum.common.security.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.example.gdscforum.common.dto.TokenDto;
 import com.example.gdscforum.domain.auth.dto.AuthTokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
 @RequiredArgsConstructor
-@Service
-public class TokenService {
+@Component
+public class JwtService {
 
     private final Algorithm tokenAlgorithm;
     @Value("${app.jwt.accessTokenValidMS}") private Long accessTokenValidMilliseconds;
@@ -28,6 +30,14 @@ public class TokenService {
             .sign(tokenAlgorithm);
 
         return new AuthTokenDto(token, tokenValidMilliseconds);
+    }
+
+    public TokenDto getTokenDto() {
+        TokenDto tokenDto = (TokenDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (tokenDto == null) {
+            throw new RuntimeException("TokenDto is null");
+        }
+        return tokenDto;
     }
 
     public AuthTokenDto createAccessToken(Integer id, String role) {

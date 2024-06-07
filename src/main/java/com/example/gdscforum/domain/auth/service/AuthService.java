@@ -1,5 +1,6 @@
 package com.example.gdscforum.domain.auth.service;
 
+import com.example.gdscforum.common.security.jwt.JwtService;
 import com.example.gdscforum.common.util.PasswordEncoder;
 import com.example.gdscforum.domain.auth.controller.response.SignResponse;
 import com.example.gdscforum.domain.auth.dto.AuthTokenDto;
@@ -15,7 +16,7 @@ import java.util.Optional;
 @Service
 public class AuthService {
     private final UserService userService;
-    private final TokenService tokenService;
+    private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -29,8 +30,8 @@ public class AuthService {
         password = passwordEncoder.encode(password);
         User user = userService.createUser(username, email, password, introduction, age, link, role);
 
-        AuthTokenDto accessToken = tokenService.createAccessToken(user.getId(), role);
-        AuthTokenDto refreshToken = tokenService.createRefreshToken(user.getId(), role);
+        AuthTokenDto accessToken = jwtService.createAccessToken(user.getId(), role);
+        AuthTokenDto refreshToken = jwtService.createRefreshToken(user.getId(), role);
 
         user.setRefreshToken(refreshToken.getToken());
 
@@ -45,8 +46,8 @@ public class AuthService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        AuthTokenDto accessToken = tokenService.createAccessToken(user.getId(), user.getRole());
-        AuthTokenDto refreshToken = tokenService.createRefreshToken(user.getId(), user.getRole());
+        AuthTokenDto accessToken = jwtService.createAccessToken(user.getId(), user.getRole());
+        AuthTokenDto refreshToken = jwtService.createRefreshToken(user.getId(), user.getRole());
 
         user.setRefreshToken(refreshToken.getToken());
 
