@@ -58,4 +58,10 @@ public class PostService {
 
         postRepository.delete(post);
     }
+
+    public List<PostDto> listPostsByUserId(Integer userId) {
+        List<Post> posts = postRepository.findByUserId(userId);
+
+        return PostDto.from(posts);
+    }
 }

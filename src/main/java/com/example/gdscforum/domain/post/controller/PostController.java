@@ -1,6 +1,7 @@
 package com.example.gdscforum.domain.post.controller;
 
 import com.example.gdscforum.common.dto.Response;
+import com.example.gdscforum.common.security.jwt.JwtService;
 import com.example.gdscforum.domain.post.controller.request.CreatePostRequest;
 import com.example.gdscforum.domain.post.controller.response.GetPostResponse;
 import com.example.gdscforum.domain.post.dto.PostDto;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostController {
     private final PostService postService;
+    private final JwtService jwtService;
 
     @Operation(
         summary = "게시글 단일 조회",
@@ -71,5 +73,18 @@ public class PostController {
         postService.deletePost(id);
 
         return Response.data("OK");
+    }
+
+    @Operation(
+        summary = "내가 작성한 게시글 조회",
+        description = "내가 작성한 게시글을 조회합니다."
+    )
+    @GetMapping("/my")
+    public Response<List<GetPostResponse>> listMyPosts() {
+        Integer userId = jwtService.getTokenDto().getUserId();
+
+        List<PostDto> posts = postService.listPostsByUserId(userId);
+
+        return Response.data(GetPostResponse.from(posts));
     }
 }
