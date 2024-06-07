@@ -1,5 +1,6 @@
 package com.example.gdscforum.domain.post.entity;
 
+import com.example.gdscforum.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

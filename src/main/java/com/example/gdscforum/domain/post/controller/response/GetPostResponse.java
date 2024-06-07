@@ -1,7 +1,6 @@
 package com.example.gdscforum.domain.post.controller.response;
 
 import com.example.gdscforum.domain.post.dto.PostDto;
-import com.example.gdscforum.domain.post.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

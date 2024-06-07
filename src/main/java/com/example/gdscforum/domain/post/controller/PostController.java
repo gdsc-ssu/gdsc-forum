@@ -1,6 +1,7 @@
 package com.example.gdscforum.domain.post.controller;
 
 import com.example.gdscforum.common.dto.Response;
+import com.example.gdscforum.common.security.jwt.JwtService;
 import com.example.gdscforum.domain.post.controller.request.CreatePostRequest;
 import com.example.gdscforum.domain.post.controller.response.GetPostResponse;
 import com.example.gdscforum.domain.post.dto.PostDto;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping("/posts")
 public class PostController {
     private final PostService postService;
+    private final JwtService jwtService;
 
     @Operation(
         summary = "게시글 단일 조회",

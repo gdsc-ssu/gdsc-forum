@@ -3,6 +3,8 @@ package com.example.gdscforum.domain.post.service;
 import com.example.gdscforum.domain.post.dto.PostDto;
 import com.example.gdscforum.domain.post.entity.Post;
 import com.example.gdscforum.domain.post.repository.PostRepository;
+import com.example.gdscforum.domain.user.entity.User;
+import com.example.gdscforum.domain.user.service.RawUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
