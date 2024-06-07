@@ -2,6 +2,7 @@ package com.example.gdscforum.domain.post.controller.response;
 
 import com.example.gdscforum.domain.post.dto.PostDto;
 import com.example.gdscforum.domain.post.entity.Post;
+import com.example.gdscforum.domain.user.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class GetPostResponse {
     private String content;
     private String createdAt;
     private String updatedAt;
+    private UserDto user;
 
     public static GetPostResponse from(PostDto postDto) {
         return GetPostResponse.builder()
@@ -28,6 +30,7 @@ public class GetPostResponse {
             .content(postDto.getContent())
             .createdAt(postDto.getCreatedAt().toString())
             .updatedAt(postDto.getUpdatedAt().toString())
+            .user(postDto.getUser())
             .build();
     }
 

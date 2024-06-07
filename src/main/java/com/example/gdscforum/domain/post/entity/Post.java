@@ -1,5 +1,6 @@
 package com.example.gdscforum.domain.post.entity;
 
+import com.example.gdscforum.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,6 +30,10 @@ public class Post {
 
     @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Builder
     public Post(String title, String content, LocalDateTime createdAt, LocalDateTime updatedAt) {
