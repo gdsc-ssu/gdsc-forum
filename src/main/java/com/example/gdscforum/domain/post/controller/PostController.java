@@ -48,7 +48,9 @@ public class PostController {
     )
     @PostMapping
     public Response<GetPostResponse> createPost(@Valid @RequestBody CreatePostRequest request) {
-        PostDto post = postService.createPost(request.getTitle(), request.getContent());
+        Integer userId = jwtService.getTokenDto().getUserId();
+
+        PostDto post = postService.createPost(request.getTitle(), request.getContent(), userId);
 
         return Response.data(GetPostResponse.from(post));
     }

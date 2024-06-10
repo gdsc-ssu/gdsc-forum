@@ -3,6 +3,8 @@ package com.example.gdscforum.domain.post.service;
 import com.example.gdscforum.domain.post.dto.PostDto;
 import com.example.gdscforum.domain.post.entity.Post;
 import com.example.gdscforum.domain.post.repository.PostRepository;
+import com.example.gdscforum.domain.user.entity.User;
+import com.example.gdscforum.domain.user.service.RawUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,7 @@ import java.util.List;
 @Service
 public class PostService {
     private final PostRepository postRepository;
+    private final RawUserService rawUserService;
 
     public PostDto getPostById(Integer id) {
         Post post = postRepository.findById(id)
@@ -30,8 +33,10 @@ public class PostService {
     }
 
     @Transactional
-    public PostDto createPost(String title, String content) {
-        Post post = new Post(title, content, LocalDateTime.now(), LocalDateTime.now());
+    public PostDto createPost(String title, String content, Integer userId) {
+        User user = rawUserService.getUserById(userId);
+
+        Post post = new Post(title, content, user, LocalDateTime.now(), LocalDateTime.now());
         post = postRepository.save(post);
 
         return PostDto.from(post);

@@ -24,7 +24,7 @@ public class UserController {
     public Response<GetUserResponse> getPostById() {
         Integer userId = jwtService.getTokenDto().getUserId();
 
-        UserDto user = userService.getUserById(userId);
+        UserDto user = userService.getUserDtoById(userId);
 
         return Response.data(GetUserResponse.from(user));
     }

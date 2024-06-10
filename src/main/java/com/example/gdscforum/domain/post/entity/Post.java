@@ -36,9 +36,10 @@ public class Post {
     private User user;
 
     @Builder
-    public Post(String title, String content, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Post(String title, String content, User user, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.title = title;
         this.content = content;
+        this.user = user;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

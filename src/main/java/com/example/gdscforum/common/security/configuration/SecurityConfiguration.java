@@ -72,6 +72,7 @@ public class SecurityConfiguration {
                 .requestMatchers(request -> request.getRequestURI().startsWith("/auth/sign-up")).permitAll()
                 .requestMatchers(request -> request.getRequestURI().startsWith("/auth/sign-in")).permitAll()
                 .requestMatchers(request -> request.getRequestURI().startsWith("/dev/ping")).permitAll()
+                .requestMatchers(request -> request.getRequestURI().startsWith("/h2-console")).permitAll()
                 .anyRequest().authenticated()
         );
         http.addFilterBefore(
