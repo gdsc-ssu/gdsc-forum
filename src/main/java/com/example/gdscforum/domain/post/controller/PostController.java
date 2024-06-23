@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import com.example.gdscforum.common.security.jwt.JwtService;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
 @Tag(name = "Post API", description = "Post CRUD API")
 public class PostController {
     private final PostService postService;
+    private final JwtService jwtService;
 
     @Operation(
             summary = "Post 생성",

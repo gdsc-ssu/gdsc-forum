@@ -3,6 +3,7 @@ GDSC Forum 스프링 부트 API 서버입니다.
 
 ## 💻 Coding Convention
 - 컨벤션은 강하게 가져가진 않겠습니다. 각자의 프로젝트에 도움이 되도록 참고만 해주세요.
+
 <details>
  <summary> 🗂 패키지 구조 </summary>
  <div markdown="1">       
@@ -259,7 +260,6 @@ gradlew
 - 단 feat은 주 단위의 과제 한 가지를 담당하며, 기능 개발이 완료되면 본인의 개인 브랜치로 Pull Request를 보냅니다.
 - 다른 팀원이 pr을 확인하고, 코드리뷰를 진행한 뒤 문제가 없으면 개인 브랜치에 병합을 합니다.
 - main 브랜치는 default 이지만 중요하지 않은 브랜치입니다. 최종 배포 시에만 사용합니다.
-
 
 <br>
 

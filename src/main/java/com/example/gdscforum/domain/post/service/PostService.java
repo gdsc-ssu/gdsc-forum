@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.gdscforum.domain.user.entity.User;
+import com.example.gdscforum.domain.user.service.RawUserService;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
