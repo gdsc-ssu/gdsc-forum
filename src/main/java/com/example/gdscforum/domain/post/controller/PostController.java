@@ -4,7 +4,7 @@ import com.example.gdscforum.common.dto.Response;
 import com.example.gdscforum.common.security.jwt.JwtService;
 import com.example.gdscforum.domain.post.controller.request.CreatePostRequest;
 import com.example.gdscforum.domain.post.controller.request.UpdatePostRequest;
-import com.example.gdscforum.domain.post.dto.PostDto;
+import com.example.gdscforum.domain.post.dto.PostResponse;
 import com.example.gdscforum.domain.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -39,9 +39,11 @@ public class PostController {
             }
     )
     @PostMapping
-    public Response<PostDto> createPost(@Valid @RequestBody CreatePostRequest request) {
-        PostDto postDto = postService.createPost(request);
-        return Response.data(postDto);
+    public Response<PostResponse> createPost(@Valid @RequestBody CreatePostRequest request) {
+        Integer userId = jwtService.getTokenDto().getUserId();
+
+        PostResponse postResponse = postService.createPost(request, userId);
+        return Response.data(postResponse);
     }
 
     @Operation(
@@ -53,9 +55,9 @@ public class PostController {
             }
     )
     @GetMapping("/{post_id}")
-    public Response<PostDto> getPost(@NotNull @PathVariable("post_id") Long id) {
-        PostDto postDto = postService.getPost(id);
-        return Response.data(postDto);
+    public Response<PostResponse> getPost(@NotNull @PathVariable("post_id") Long id) {
+        PostResponse postResponse = postService.getPost(id);
+        return Response.data(postResponse);
     }
 
     @Operation(
@@ -66,9 +68,9 @@ public class PostController {
             }
     )
     @GetMapping
-    public Response<List<PostDto>> getAllPost() {
-        List<PostDto> postDtos = postService.getAllPost();
-        return Response.data(postDtos);
+    public Response<List<PostResponse>> getAllPost() {
+        List<PostResponse> postResponses = postService.getAllPost();
+        return Response.data(postResponses);
     }
 
     @Operation(
@@ -80,10 +82,10 @@ public class PostController {
             }
     )
     @PutMapping("/{post_id}")
-    public Response<PostDto> updatePost(@NotNull @PathVariable("post_id") Long id,
-                                        @Valid @RequestBody UpdatePostRequest request) {
-        PostDto postDto = postService.updatePost(id, request);
-        return Response.data(postDto);
+    public Response<PostResponse> updatePost(@NotNull @PathVariable("post_id") Long id,
+                                             @Valid @RequestBody UpdatePostRequest request) {
+        PostResponse postResponse = postService.updatePost(id, request);
+        return Response.data(postResponse);
     }
 
     @Operation(
