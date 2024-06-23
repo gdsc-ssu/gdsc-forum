@@ -1,7 +1,9 @@
 package com.example.gdscforum.domain.post.entity;
 
-import com.example.gdscforum.common.entity.BaseTimeEntity;
-import jakarta.persistence.*;
+import com.example.gdscforum.common.entity.BaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,11 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "post")
-public class Post extends BaseTimeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Post extends BaseEntity {
     @NotEmpty
     @Column(name = "title", length = 256, nullable = false)
     private String title;
