@@ -1,8 +1,26 @@
+CREATE TABLE Users(
+      id INT NOT NULL AUTO_INCREMENT,
+      username VARCHAR(256) NOT NULL,
+      email VARCHAR(256) NOT NULL,
+      password VARCHAR(256) NOT NULL,
+      introduction VARCHAR(256),
+      age INT,
+      link VARCHAR(2048),
+      role VARCHAR(256) NOT NULL,
+      refresh_token VARCHAR(1024),
+      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY(id)
+);
+
+
 CREATE TABLE Post(
      id INT NOT NULL AUTO_INCREMENT,
      title VARCHAR(256) NOT NULL,
      content VARCHAR(2048) NOT NULL,
      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
      updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     user_id INT NOT NULL,
+     FOREIGN KEY (user_id) REFERENCES Users(id),
      PRIMARY KEY(id)
 );

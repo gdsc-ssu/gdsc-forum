@@ -1,7 +1,13 @@
 package com.example.gdscforum.domain.post.entity;
 
-import com.example.gdscforum.common.entity.BaseTimeEntity;
-import jakarta.persistence.*;
+import com.example.gdscforum.common.entity.BaseEntity;
+import com.example.gdscforum.domain.user.entity.User;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,11 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "post")
-public class Post extends BaseTimeEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class Post extends BaseEntity {
     @NotEmpty
     @Column(name = "title", length = 256, nullable = false)
     private String title;
@@ -26,9 +28,14 @@ public class Post extends BaseTimeEntity {
     @Column(name = "content", length = 2048, nullable = false)
     private String content;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Builder
-    public Post(String title, String content) {
+    public Post(String title, String content, User user) {
         this.title = title;
         this.content = content;
+        this.user = user;
     }
 }

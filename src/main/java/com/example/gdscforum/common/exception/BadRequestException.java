@@ -1,9 +1,9 @@
 package com.example.gdscforum.common.exception;
 
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import org.springframework.http.HttpStatus;
 
 public class BadRequestException extends ApiException {
     public BadRequestException(String message) {
-        super(BAD_REQUEST, message);
+        super(HttpStatus.BAD_REQUEST, message);
     }
 }

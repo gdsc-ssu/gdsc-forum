@@ -1,9 +1,9 @@
 package com.example.gdscforum.common.exception;
 
-import static org.springframework.http.HttpStatus.CONFLICT;
+import org.springframework.http.HttpStatus;
 
 public class ConflictException extends ApiException {
     public ConflictException(String message) {
-        super(CONFLICT, message);
+        super(HttpStatus.CONFLICT, message);
     }
 }

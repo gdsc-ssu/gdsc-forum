@@ -2,57 +2,54 @@ package com.example.gdscforum.domain.post.service;
 
 import com.example.gdscforum.domain.post.controller.request.CreatePostRequest;
 import com.example.gdscforum.domain.post.controller.request.UpdatePostRequest;
-import com.example.gdscforum.domain.post.dto.PostDto;
+import com.example.gdscforum.domain.post.dto.PostResponse;
 import com.example.gdscforum.domain.post.entity.Post;
 import com.example.gdscforum.domain.post.exception.PostNotFoundException;
 import com.example.gdscforum.domain.post.repository.PostRepository;
+import com.example.gdscforum.domain.user.entity.User;
+import com.example.gdscforum.domain.user.service.RawUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class PostService {
     private final PostRepository postRepository;
+    private final RawUserService rawUserService;
 
     @Transactional
-    public PostDto createPost(CreatePostRequest request) {
-        Post post = new Post(request.getTitle(), request.getContent());
+    public PostResponse createPost(CreatePostRequest request, Integer userId) {
+        User user = rawUserService.getUserById(userId);
+        Post post = new Post(request.getTitle(), request.getContent(), user);
 
         post = postRepository.save(post);
 
-        return PostDto.from(post);
+        return PostResponse.from(post);
     }
 
-    public PostDto getPost(Long id) {
+    public PostResponse getPost(Long id) {
         Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
 
-        return PostDto.builder()
-                .id(post.getId())
-                .title(post.getTitle())
-                .content(post.getContent())
-                .createdAt(post.getCreatedAt())
-                .updatedAt(post.getUpdatedAt())
-                .build();
+        return PostResponse.from(post);
     }
 
-    public List<PostDto> getAllPost() {
-        List<PostDto> postDtos = postRepository.findAll().stream().map(PostDto::from).collect(Collectors.toList());
+    public List<PostResponse> getAllPost() {
+        List<Post> posts = postRepository.findAll();
 
-        return postDtos;
+        return PostResponse.from(posts);
     }
 
     @Transactional
-    public PostDto updatePost(Long id, UpdatePostRequest request) {
+    public PostResponse updatePost(Long id, UpdatePostRequest request) {
         Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
 
         post.setTitle(request.getTitle());
         post.setContent(request.getContent());
 
-        return PostDto.from(post);
+        return PostResponse.from(post);
     }
 
     @Transactional
@@ -60,5 +57,11 @@ public class PostService {
         Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
 
         postRepository.delete(post);
+    }
+
+    public List<PostResponse> getMyPost(Integer userId) {
+        List<Post> posts = postRepository.findByUserId(userId);
+
+        return PostResponse.from(posts);
     }
 }

@@ -1,9 +1,9 @@
 package com.example.gdscforum.common.exception;
 
-import static org.springframework.http.HttpStatus.FORBIDDEN;
+import org.springframework.http.HttpStatus;
 
 public class ForbiddenException extends ApiException {
     public ForbiddenException(String message) {
-        super(FORBIDDEN, message);
+        super(HttpStatus.FORBIDDEN, message);
     }
 }

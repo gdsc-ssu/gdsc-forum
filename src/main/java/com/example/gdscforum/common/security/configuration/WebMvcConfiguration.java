@@ -1,4 +1,4 @@
-package com.example.gdscforum.common.configuration;
+package com.example.gdscforum.common.security.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
