@@ -27,12 +27,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/posts")
 @RestController
-@Tag(name = "Post API", description = "Post CRUD API")
+@Tag(name = "게시글 API", description = "게시글 CRUD API")
 public class PostController {
     private final PostService postService;
 
     @Operation(
-            summary = "Post 생성",
+            summary = "게시글 생성",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK"),
                     @ApiResponse(responseCode = "500", description = "INTERNAL_SERVER_ERROR")
@@ -46,7 +46,7 @@ public class PostController {
     }
 
     @Operation(
-            summary = "Post 단일 조회",
+            summary = "게시글 단일 조회",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK"),
                     @ApiResponse(responseCode = "404", description = "POST_NOT_FOUND"),
@@ -60,7 +60,7 @@ public class PostController {
     }
 
     @Operation(
-            summary = "Post 전체 조회",
+            summary = "게시글 전체 조회",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK"),
                     @ApiResponse(responseCode = "500", description = "INTERNAL_SERVER_ERROR")
@@ -73,7 +73,7 @@ public class PostController {
     }
 
     @Operation(
-            summary = "Post 수정",
+            summary = "게시글 수정",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK"),
                     @ApiResponse(responseCode = "404", description = "POST_NOT_FOUND"),
@@ -88,7 +88,7 @@ public class PostController {
     }
 
     @Operation(
-            summary = "Post 삭제",
+            summary = "게시글 삭제",
             responses = {
                     @ApiResponse(responseCode = "200", description = "OK"),
                     @ApiResponse(responseCode = "404", description = "POST_NOT_FOUND"),
