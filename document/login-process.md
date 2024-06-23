@@ -67,9 +67,10 @@ http.addFilterBefore(
 - 토큰의 유효 기간(application.yaml)과 토큰을 서명하는 데 사용할 알고리즘(JwtAlgorithmConfiguration)을 주입 받아 사용하고, 사용자 id와 역할을 클레임으로 추가하여 jwt
   토큰을 생성한다.
 
-<aside>
-💡 JWT는 `.` 을 구분자로 3가지의 문자열(header, payload, signature)로 되어 있다. Payload 부분에는 토큰에 담을 정보가 들어있다. 여기에 담는 정보의 한 ‘조각’을 클레임이라 부르고, 이는 name / value의 한 쌍으로 이루어져 있다.
-</aside>
+> JWT는 `.` 을 구분자로 3가지의 문자열로 되어 있다.
+>
+> ![jwt.png](/image/jwt.png)
+> - Payload 부분에는 토큰에 담을 정보가 들어있다. 여기에 담는 정보의 한 ‘조각’을 클레임이라 부르고, 이는 name / value의 한 쌍으로 이루어져 있다.
 
 - SecurityContextHolder를 통해 현재 인증된 사용자의 정보를 가져온다.
 
