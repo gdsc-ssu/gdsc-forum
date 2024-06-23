@@ -69,7 +69,7 @@ http.addFilterBefore(
 
 > JWT는 `.` 을 구분자로 3가지의 문자열로 되어 있다.
 >
-> ![jwt.png](/image/jwt.png)
+> ![jwt.png](https://github.com/gdsc-ssu/gdsc-forum/blob/c107c98f3f6dafc96321702b6a88dc7c7a78460e/document/image/jwt.png)
 > - Payload 부분에는 토큰에 담을 정보가 들어있다. 여기에 담는 정보의 한 ‘조각’을 클레임이라 부르고, 이는 name / value의 한 쌍으로 이루어져 있다.
 
 - SecurityContextHolder를 통해 현재 인증된 사용자의 정보를 가져온다.
