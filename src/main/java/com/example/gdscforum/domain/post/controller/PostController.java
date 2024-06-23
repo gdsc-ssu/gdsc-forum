@@ -1,7 +1,7 @@
 package com.example.gdscforum.domain.post.controller;
 
 import com.example.gdscforum.common.dto.Response;
-import com.example.gdscforum.common.security.jwt.JwtService;
+import com.example.gdscforum.common.dto.TokenDto;
 import com.example.gdscforum.domain.post.controller.request.CreatePostRequest;
 import com.example.gdscforum.domain.post.controller.request.UpdatePostRequest;
 import com.example.gdscforum.domain.post.dto.PostResponse;
@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +30,6 @@ import java.util.List;
 @Tag(name = "Post API", description = "Post CRUD API")
 public class PostController {
     private final PostService postService;
-    private final JwtService jwtService;
 
     @Operation(
             summary = "Post 생성",
@@ -39,10 +39,9 @@ public class PostController {
             }
     )
     @PostMapping
-    public Response<PostResponse> createPost(@Valid @RequestBody CreatePostRequest request) {
-        Integer userId = jwtService.getTokenDto().getUserId();
-
-        PostResponse postResponse = postService.createPost(request, userId);
+    public Response<PostResponse> createPost(@AuthenticationPrincipal TokenDto tokenDto,
+                                             @Valid @RequestBody CreatePostRequest request) {
+        PostResponse postResponse = postService.createPost(request, tokenDto.getUserId());
         return Response.data(postResponse);
     }
 
@@ -101,5 +100,18 @@ public class PostController {
         postService.deletePost(id);
 
         return Response.data("OK");
+    }
+
+    @Operation(
+            summary = "내가 작성한 게시글 조회",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "OK"),
+                    @ApiResponse(responseCode = "500", description = "INTERNAL_SERVER_ERROR")
+            }
+    )
+    @GetMapping("/my")
+    public Response<List<PostResponse>> getMyPost(@AuthenticationPrincipal TokenDto tokenDto) {
+        List<PostResponse> postResponse = postService.getMyPost(tokenDto.getUserId());
+        return Response.data(postResponse);
     }
 }
