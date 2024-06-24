@@ -8,8 +8,6 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.gdscforum.common.dto.TokenDto;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,7 +19,8 @@ import java.time.Instant;
 public class JwtVerifier {
 
     private final Algorithm tokenAlgorithm;
-    @Value("${spring.profiles.active}") private String profile;
+    @Value("${spring.profiles.active}")
+    private String profile;
 
     public TokenDto verify(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
@@ -34,7 +33,7 @@ public class JwtVerifier {
 
     private TokenDto verifyToken(String bearerToken) {
         if (bearerToken.equals("Bearer test") && profile.equals("local")) {
-            // Allow "Bearer test" token only in test profile for simplicity
+            // Allow "Bear                  er test" token only in test profile for simplicity
             return new TokenDto(1, "USER");
         }
 
@@ -42,16 +41,16 @@ public class JwtVerifier {
             String token = bearerToken.substring(7);
 
             JWTVerifier tokenVerifier = JWT
-                .require(tokenAlgorithm)
-                .withClaimPresence("userId")
-                .withClaimPresence("userRole")
-                .build();
+                    .require(tokenAlgorithm)
+                    .withClaimPresence("userId")
+                    .withClaimPresence("userRole")
+                    .build();
 
             DecodedJWT verifiedJWT = tokenVerifier.verify(token);
 
             return new TokenDto(
-                verifiedJWT.getClaim("userId").asInt(),
-                verifiedJWT.getClaim("userRole").asString());
+                    verifiedJWT.getClaim("userId").asInt(),
+                    verifiedJWT.getClaim("userRole").asString());
         } catch (TokenExpiredException e) {
             // 추후 수정
             throw new TokenExpiredException("Token expired", Instant.now());

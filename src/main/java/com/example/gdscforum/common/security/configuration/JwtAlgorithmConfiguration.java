@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class JwtAlgorithmConfiguration {
     @Bean
     public Algorithm tokenAlgorithm() {
+        //원래 이렇게 하드코딩하면 안된다. 환경변수로 빼던지 다른 방법으로 관리해야한다.
         String secret = "gdscforum";
         return Algorithm.HMAC256(secret);
     }

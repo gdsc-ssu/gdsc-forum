@@ -1,5 +1,6 @@
 package com.example.gdscforum.domain.user.entity;
 
+import com.example.gdscforum.domain.post.entity.Post;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -48,6 +51,9 @@ public class User {
     @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> posts;
+
     @Builder
     public User(String username, String email, String password, String introduction, Integer age, String link, String role, String refreshToken, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.username = username;
@@ -60,5 +66,6 @@ public class User {
         this.refreshToken = refreshToken;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.posts = new ArrayList<>();
     }
 }

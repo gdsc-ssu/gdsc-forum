@@ -40,7 +40,7 @@ public class PostController {
             responses = @ApiResponse(responseCode = "200", description = "특정 게시글을 반환합니다")
     )
     @GetMapping("/{postId}")
-    public Response<PostResponseDto> getPostById(@PathVariable Long postId) {
+    public Response<PostResponseDto> getPostById(@PathVariable Integer postId) {
         PostResponseDto post = postService.getPost(postId);
         return Response.of(200, "조회 성공", post);
     }
@@ -51,14 +51,14 @@ public class PostController {
     )
     @PostMapping
     public Response<PostResponseDto> createPost(@RequestBody PostCreateRequest request) {
-        PostResponseDto postResponseDto = postService.createPost(request);
+        PostResponseDto postResponseDto = postService.createPost(request, jwtService.getTokenDto().getUserId());
         return Response.of(201, "생성 성공", postResponseDto);
 
     }
 
     //patch는 DB의 특정값만 바꾸고 싶을 때 사용한다. (부분 수정 )
     @PutMapping("/{id}")
-    public Response<PostResponseDto> update(@PathVariable Long id, @Valid @RequestBody PostCreateRequest request) {
+    public Response<PostResponseDto> update(@PathVariable Integer id, @Valid @RequestBody PostCreateRequest request) {
         PostResponseDto post = postService.update(id, request.getTitle(), request.getContent());
 
         return Response.of(200, "수정 성공", post);
@@ -68,7 +68,7 @@ public class PostController {
     //삭제 메서드는 보통 응답을 안 주더라
     //그리고 soft delete를 쓴다.
     @DeleteMapping("/{id}")
-    public Response<String> delete(@PathVariable Long id) {
+    public Response<String> delete(@PathVariable Integer id) {
         postService.deletePost(id);
         return Response.data("OK");
     }

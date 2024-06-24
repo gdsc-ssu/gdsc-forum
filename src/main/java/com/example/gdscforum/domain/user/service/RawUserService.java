@@ -1,5 +1,6 @@
 package com.example.gdscforum.domain.user.service;
 
+import com.example.gdscforum.domain.user.Dto.UserSimpleResponseDto;
 import com.example.gdscforum.domain.user.entity.User;
 import com.example.gdscforum.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,20 +27,25 @@ public class RawUserService {
         // role이 admin이면 throw / role이 null이면 user로
 
         User user = User.builder()
-            .username(username)
-            .email(email)
-            .password(password)
-            .introduction(introduction)
-            .age(age)
-            .link(link)
-            .role(role)
-            .refreshToken(null)
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
-            .build();
+                .username(username)
+                .email(email)
+                .password(password)
+                .introduction(introduction)
+                .age(age)
+                .link(link)
+                .role(role)
+                .refreshToken(null)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
 
         user = userRepository.save(user);
 
         return user;
+    }
+
+    public UserSimpleResponseDto getUserById(Integer userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("유저를 찾을 수 없습니다."));
+        return UserSimpleResponseDto.fromEntity(user);
     }
 }
