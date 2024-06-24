@@ -1,6 +1,7 @@
 package com.example.gdscforum.domain.post.controller;
 
 import com.example.gdscforum.common.dto.Response;
+import com.example.gdscforum.common.security.jwt.JwtService;
 import com.example.gdscforum.domain.post.controller.request.PostCreateRequest;
 import com.example.gdscforum.domain.post.controller.response.PostResponseDto;
 import com.example.gdscforum.domain.post.service.PostService;
@@ -14,14 +15,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Post 컨트롤러", description = "게시글 관련 API")
 public class PostController {
+
     private final PostService postService;
+    private final JwtService jwtService;
 
     @Operation(
             summary = "전체 게시글 조회",
@@ -39,7 +41,7 @@ public class PostController {
     )
     @GetMapping("/{postId}")
     public Response<PostResponseDto> getPostById(@PathVariable Long postId) {
-        PostResponseDto post = postService.findPostById(postId).orElseThrow(() -> new RuntimeException(("Post not found with id " + postId)));
+        PostResponseDto post = postService.getPost(postId);
         return Response.of(200, "조회 성공", post);
     }
 

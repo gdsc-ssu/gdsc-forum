@@ -22,7 +22,6 @@ public class Post {
     @Column(nullable = false, length = 2048)
     private String content;
 
-
     @Column(nullable = false, updatable = false)
     private Timestamp createdAt;
 
