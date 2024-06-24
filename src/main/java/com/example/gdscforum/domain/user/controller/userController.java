@@ -4,6 +4,7 @@ import com.example.gdscforum.common.dto.Response;
 import com.example.gdscforum.common.security.jwt.JwtService;
 import com.example.gdscforum.domain.user.Dto.UserSimpleResponseDto;
 import com.example.gdscforum.domain.user.service.RawUserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,10 @@ public class userController {
     private final JwtService jwtService;
 
 
+    @Operation(
+            summary = "유저 조회",
+            description = "유저 정보를 조회합니다."
+    )
     @GetMapping
     public Response<UserSimpleResponseDto> getUser() {
 

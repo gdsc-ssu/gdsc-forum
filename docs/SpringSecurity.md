@@ -73,6 +73,7 @@ private AuthTokenDto createToken(Integer id,String role,Long tokenValidMilliseco
 
 ## Token Verification
 
+- JwtFilter 클래스에서 JWT token을 검증한다.
 - JwtVerifier 클래스에서 들어오는 request에 토큰 검증을 하게 된다.
 - auth0 클래스에 JWTVerifier 클래스가 있는데
 
@@ -81,6 +82,9 @@ private AuthTokenDto createToken(Integer id,String role,Long tokenValidMilliseco
   이런 역할을 한다.
 
 - 인증을 완료하고 TokenDto를 반환하면 된다.
+
+> Refresh Token은 Access Token이 만료되었을 때, 새로운 Access Token을 발급받기 위한 토큰이다. Access Token이 만료되면 Refresh Token을 이용하여 새로운
+> Access Token을 발급받을 수 있다.
 
 ## Security Configuration
 
@@ -109,6 +113,24 @@ Security의 필터를 사용하는 시작점이 된다.
 `http.addFilterBefore(
 jwtFilter(),
 UsernamePasswordAuthenticationFilter.class
-);`를 사용해서 순서를 지정해준다. 
+);`를 사용해서 순서를 지정해준다.
 
+## 그외 궁금한 점
 
+#### Security context Holder
+
+![](https://docs.spring.io/spring-security/reference/_images/servlet/authentication/architecture/securitycontextholder.png)
+공식 문서에 spring security의 핵심이라고 나와 있다. spring context를 담고 있다.
+한마디로 인증된 사용자의 details를 담고 있는 것이다.
+
+- spring security는 Security context holder가 어떻게 채워져 있는지 상관하지 않는다.
+    - 걍 채워져있으면 인증된 사용자로 판단한다.
+
+#### SecurityContext
+
+얘는 Authentication 객체를 가지고 있다.(interface)
+
+- 사용자가 로그인 할 때, 사용자 이름과 비밀번호 가튼 자격 증명을 입력한다.
+- 이 자격 증명은 Authentication 객체로 감싸서 AuthenticationManager에게 전달된다. 얘는 아직 인증은 안된 상태
+- 인증이 성공적으로 인증이 되면 Authentication객체가 SecurityContext에 저장이 되는 것이다.
+- Authentication 객체는 Principal과 Credential을 가지고 있다.
