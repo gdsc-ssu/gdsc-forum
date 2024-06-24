@@ -1,4 +1,7 @@
 spring:
+  profiles:
+    active: local
+
   # H2 Database ??
   datasource:
     driver-class-name: org.h2.Driver
@@ -29,6 +32,11 @@ spring:
       mode: always
       schema-locations: classpath:db-init-scripts/schema.sql
       data-locations: classpath:db-init-scripts/data.sql
+
+app:
+  jwt:
+    accessTokenValidMS: 3600000  # 1시간
+    refreshTokenValidMS: 604800000  # 7일
 
 server:
   # 서버 안전하게 종료하기
