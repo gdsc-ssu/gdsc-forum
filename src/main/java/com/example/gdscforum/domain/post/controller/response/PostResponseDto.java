@@ -1,7 +1,7 @@
 package com.example.gdscforum.domain.post.controller.response;
 
 import com.example.gdscforum.domain.post.entity.Post;
-import com.example.gdscforum.domain.user.Dto.UserResponseDto;
+import com.example.gdscforum.domain.user.Dto.UserSimpleResponseDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +22,10 @@ public class PostResponseDto {
 
     private Timestamp updatedAt;
 
-    private UserResponseDto userResponseDto;
+    private UserSimpleResponseDto userResponseDto;
 
     @Builder
-    public PostResponseDto(Integer id, String title, String content, Timestamp createdAt, Timestamp updatedAt, UserResponseDto userResponseDto) {
+    public PostResponseDto(Integer id, String title, String content, Timestamp createdAt, Timestamp updatedAt, UserSimpleResponseDto userResponseDto) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -41,7 +41,7 @@ public class PostResponseDto {
                 .content(post.getContent())
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
-                .userResponseDto(UserResponseDto.fromEntity(post.getUser()))
+                .userResponseDto(UserSimpleResponseDto.fromEntity(post.getUser()))
                 .build();
     }
 

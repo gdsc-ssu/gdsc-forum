@@ -7,19 +7,19 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class UserResponseDto {
+public class UserSimpleResponseDto {
 
     private String username;
     private String email;
 
     @Builder
-    public UserResponseDto(String username, String email) {
+    public UserSimpleResponseDto(String username, String email) {
         this.username = username;
         this.email = email;
     }
 
-    public static UserResponseDto fromEntity(User user) {
-        return UserResponseDto.builder()
+    public static UserSimpleResponseDto fromEntity(User user) {
+        return UserSimpleResponseDto.builder()
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .build();
