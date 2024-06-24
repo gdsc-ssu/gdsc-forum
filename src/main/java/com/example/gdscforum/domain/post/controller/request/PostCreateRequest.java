@@ -8,10 +8,9 @@ import lombok.Getter;
 @Getter
 public class PostCreateRequest {
 
-    @NotBlank
-    private final String title;
-    @NotBlank
+
     private final String content;
+    private final String title;
 
     @Builder
     public PostCreateRequest(@NotBlank String title, @NotBlank String content) {

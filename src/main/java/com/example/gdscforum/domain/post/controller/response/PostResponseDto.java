@@ -1,7 +1,6 @@
 package com.example.gdscforum.domain.post.controller.response;
 
 import com.example.gdscforum.domain.post.entity.Post;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,19 +11,14 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class PostResponseDto {
 
-    @JsonProperty("id")
     private Long id;
 
-    @JsonProperty("title")
     private String title;
 
-    @JsonProperty("content")
     private String content;
 
-    @JsonProperty("createdAt")
     private Timestamp createdAt;
 
-    @JsonProperty("updatedAt")
     private Timestamp updatedAt;
 
     @Builder

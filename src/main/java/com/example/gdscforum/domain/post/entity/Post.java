@@ -43,6 +43,14 @@ public class Post {
                 .build();
     }
 
+    // DTO to Entity 변환 메서드
+    public static Post toEntity(PostDto postDto) {
+        return Post.builder()
+                .title(postDto.getTitle())
+                .content(postDto.getContent())
+                .build();
+    }
+
     @PrePersist
     protected void onCreate() {
         this.createdAt = new Timestamp(System.currentTimeMillis());

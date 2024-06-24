@@ -3,11 +3,11 @@ package com.example.gdscforum.domain.post.controller;
 import com.example.gdscforum.common.dto.Response;
 import com.example.gdscforum.domain.post.controller.request.PostCreateRequest;
 import com.example.gdscforum.domain.post.controller.response.PostResponseDto;
-import com.example.gdscforum.domain.post.entity.Post;
 import com.example.gdscforum.domain.post.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -49,9 +49,25 @@ public class PostController {
     )
     @PostMapping
     public Response<PostResponseDto> createPost(@RequestBody PostCreateRequest request) {
-        Post post = PostCreateRequest.toEntity(request);
-        PostResponseDto postResponseDto = postService.createPost(post);
+        PostResponseDto postResponseDto = postService.createPost(request);
         return Response.of(201, "생성 성공", postResponseDto);
 
+    }
+
+    //patch는 DB의 특정값만 바꾸고 싶을 때 사용한다. (부분 수정 )
+    @PutMapping("/{id}")
+    public Response<PostResponseDto> update(@PathVariable Long id, @Valid @RequestBody PostCreateRequest request) {
+        PostResponseDto post = postService.update(id, request.getTitle(), request.getContent());
+
+        return Response.of(200, "수정 성공", post);
+    }
+
+
+    //삭제 메서드는 보통 응답을 안 주더라
+    //그리고 soft delete를 쓴다.
+    @DeleteMapping("/{id}")
+    public Response<String> delete(@PathVariable Long id) {
+        postService.deletePost(id);
+        return Response.data("OK");
     }
 }
