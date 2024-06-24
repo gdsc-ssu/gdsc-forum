@@ -1,6 +1,6 @@
 package com.example.gdscforum.domain.post.service;
 
-import com.example.gdscforum.domain.post.dto.PostDTO;
+import com.example.gdscforum.domain.post.dto.PostDto;
 import com.example.gdscforum.domain.post.entity.Post;
 import com.example.gdscforum.domain.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,24 +16,24 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public List<PostDTO> getAllPosts() {
+    public List<PostDto> getAllPosts() {
         return postRepository.findAll().stream()
                 .map(Post::toDto)
                 .collect(Collectors.toList());
     }
 
-    public Optional<PostDTO> getPostById(Integer id) {
+    public Optional<PostDto> getPostById(Integer id) {
         return postRepository.findById(id)
                 .map(Post::toDto);
     }
 
-    public PostDTO createPost(PostDTO postDTO) {
+    public PostDto createPost(PostDto postDTO) {
         Post post = postDTO.toEntity();
         Post savedPost = postRepository.save(post);
         return savedPost.toDto();
     }
 
-    public Optional<PostDTO> updatePost(Integer id, PostDTO postDTO) {
+    public Optional<PostDto> updatePost(Integer id, PostDto postDTO) {
         return postRepository.findById(id)
                 .map(existingPost -> {
                     existingPost.setTitle(postDTO.getTitle());

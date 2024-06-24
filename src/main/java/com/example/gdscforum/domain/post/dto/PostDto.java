@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class PostDTO {
+public class PostDto {
 
     private Integer id;
 
@@ -26,8 +26,8 @@ public class PostDTO {
     @NotNull(message = "Updated at timestamp cannot be null")
     private LocalDateTime updatedAt;
 
-    public static PostDTO fromEntity(Post post) {
-        return PostDTO.builder()
+    public static PostDto fromEntity(Post post) {
+        return PostDto.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())

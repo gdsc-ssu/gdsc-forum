@@ -1,6 +1,6 @@
 package com.example.gdscforum.domain.post.entity;
 
-import com.example.gdscforum.domain.post.dto.PostDTO;
+import com.example.gdscforum.domain.post.dto.PostDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -47,7 +47,7 @@ public class Post {
         updatedAt = LocalDateTime.now();
     }
 
-    public static Post fromDto(PostDTO dto) {
+    public static Post fromDto(PostDto dto) {
         return Post.builder()
                 .id(dto.getId())
                 .title(dto.getTitle())
@@ -57,8 +57,8 @@ public class Post {
                 .build();
     }
 
-    public PostDTO toDto() {
-        return PostDTO.builder()
+    public PostDto toDto() {
+        return PostDto.builder()
                 .id(this.id)
                 .title(this.title)
                 .content(this.content)
