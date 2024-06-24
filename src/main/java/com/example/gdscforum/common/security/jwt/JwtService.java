@@ -3,6 +3,7 @@ package com.example.gdscforum.common.security.jwt;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.gdscforum.common.dto.TokenDto;
+import com.example.gdscforum.common.exception.UnauthorizedException;
 import com.example.gdscforum.domain.auth.dto.AuthTokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +36,7 @@ public class JwtService {
     public TokenDto getTokenDto() {
         TokenDto tokenDto = (TokenDto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (tokenDto == null) {
-            throw new RuntimeException("TokenDto is null");
+            throw new UnauthorizedException("TokenDto is null");
         }
         return tokenDto;
     }

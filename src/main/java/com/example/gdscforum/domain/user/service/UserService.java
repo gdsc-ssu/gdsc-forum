@@ -2,6 +2,7 @@ package com.example.gdscforum.domain.user.service;
 
 import com.example.gdscforum.domain.user.dto.UserDto;
 import com.example.gdscforum.domain.user.entity.User;
+import com.example.gdscforum.domain.user.exception.UserNotFoundException;
 import com.example.gdscforum.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ public class UserService {
 
     public UserDto getUserDtoById(Integer id) {
         User user = userRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+            .orElseThrow(UserNotFoundException::new);
 
         return UserDto.from(user);
     }

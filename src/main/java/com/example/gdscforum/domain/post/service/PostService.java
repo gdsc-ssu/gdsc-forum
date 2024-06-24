@@ -2,6 +2,7 @@ package com.example.gdscforum.domain.post.service;
 
 import com.example.gdscforum.domain.post.dto.PostDto;
 import com.example.gdscforum.domain.post.entity.Post;
+import com.example.gdscforum.domain.post.exception.PostNotFoundException;
 import com.example.gdscforum.domain.post.repository.PostRepository;
 import com.example.gdscforum.domain.user.entity.User;
 import com.example.gdscforum.domain.user.service.RawUserService;
@@ -21,7 +22,7 @@ public class PostService {
 
     public PostDto getPostById(Integer id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+            .orElseThrow(PostNotFoundException::new);
 
         return PostDto.from(post);
     }
@@ -45,7 +46,7 @@ public class PostService {
     @Transactional
     public PostDto updatePost(Integer id, String title, String content) {
         Post post =  postRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+            .orElseThrow(PostNotFoundException::new);
 
         post.setTitle(title);
         post.setContent(content);
@@ -59,7 +60,7 @@ public class PostService {
     @Transactional
     public void deletePost(Integer id) {
         Post post =  postRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+            .orElseThrow(PostNotFoundException::new);
 
         postRepository.delete(post);
     }

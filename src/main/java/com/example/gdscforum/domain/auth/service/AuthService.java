@@ -1,5 +1,6 @@
 package com.example.gdscforum.domain.auth.service;
 
+import com.example.gdscforum.common.exception.BadRequestException;
 import com.example.gdscforum.common.security.jwt.JwtService;
 import com.example.gdscforum.common.util.PasswordEncoder;
 import com.example.gdscforum.domain.auth.controller.response.SignResponse;
@@ -24,7 +25,7 @@ public class AuthService {
         Optional<User> existingUser = rawUserService.getOptionalUserByEmail(email);
 
         if (existingUser.isPresent()) {
-            throw new IllegalArgumentException("이미 가입된 이메일입니다.");
+            throw new BadRequestException("이미 가입된 이메일입니다.");
         }
 
         password = passwordEncoder.encode(password);
@@ -40,10 +41,10 @@ public class AuthService {
 
     public SignResponse signIn(String email, String password) {
         User user = rawUserService.getOptionalUserByEmail(email)
-            .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 이메일입니다."));
+            .orElseThrow(() -> new BadRequestException("가입되지 않은 이메일입니다."));
 
         if (!passwordEncoder.matches(password, user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new BadRequestException("비밀번호가 일치하지 않습니다.");
         }
 
         AuthTokenDto accessToken = jwtService.createAccessToken(user.getId(), user.getRole());
