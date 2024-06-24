@@ -1,6 +1,7 @@
 package com.example.gdscforum.domain.post.entity;
 
 import com.example.gdscforum.domain.post.dto.PostDto;
+import com.example.gdscforum.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import java.sql.Timestamp;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false, length = 256)
     private String title;
@@ -28,10 +29,15 @@ public class Post {
     @Column(nullable = false)
     private Timestamp updatedAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @Builder
-    public Post(String title, String content) {
+    public Post(String title, String content, User user) {
         this.title = title;
         this.content = content;
+        this.user = user;
     }
 
     //Entity to DTO 변환 메서드
