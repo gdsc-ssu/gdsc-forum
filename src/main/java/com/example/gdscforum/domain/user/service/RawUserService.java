@@ -1,6 +1,5 @@
 package com.example.gdscforum.domain.user.service;
 
-import com.example.gdscforum.domain.user.dto.UserDto;
 import com.example.gdscforum.domain.user.entity.User;
 import com.example.gdscforum.domain.user.exception.UserNotFoundException;
 import com.example.gdscforum.domain.user.repository.UserRepository;

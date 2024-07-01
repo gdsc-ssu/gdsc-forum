@@ -1,5 +1,7 @@
 package com.example.gdscforum.domain.post.dto;
 
+import com.example.gdscforum.domain.comment.dto.CommentDto;
+import com.example.gdscforum.domain.comment.entity.Comment;
 import com.example.gdscforum.domain.post.entity.Post;
 import com.example.gdscforum.domain.user.dto.UserDto;
 import com.example.gdscforum.domain.user.entity.User;
@@ -22,6 +24,7 @@ public class PostDto {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private UserDto user;
+    private List<CommentDto> comments;
 
     public static PostDto from(Post post) {
         return PostDto.builder()
@@ -31,6 +34,7 @@ public class PostDto {
             .createdAt(post.getCreatedAt())
             .updatedAt(post.getUpdatedAt())
             .user(UserDto.from(post.getUser()))
+            .comments(CommentDto.from(post.getComments()))
             .build();
     }
 

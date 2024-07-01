@@ -27,6 +27,12 @@ public class PostService {
         return PostDto.from(post);
     }
 
+    public List<PostDto> listPostsByIds(List<Integer> ids) {
+        List<Post> posts = postRepository.findAllById(ids);
+
+        return PostDto.from(posts);
+    }
+
     public List<PostDto> listPosts() {
         List<Post> posts = postRepository.findAll();
 

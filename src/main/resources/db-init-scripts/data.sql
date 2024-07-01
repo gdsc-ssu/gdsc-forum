@@ -13,3 +13,8 @@ INSERT INTO post (title, content, user_id) VALUES
 ('Dockerizing Spring Boot Application', 'Steps to containerize your Spring Boot application using Docker.', 2),
 ('Spring Boot and Kafka', 'Integrating Apache Kafka with Spring Boot for real-time data processing.', 2),
 ('Microservices Architecture', 'Introduction to microservices architecture and its advantages.', 2);
+
+INSERT INTO comment (content, created_at, updated_at, user_id, post_id) VALUES
+('First comment.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 1),
+('Second comment.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 1),
+('Third comment.', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 1);

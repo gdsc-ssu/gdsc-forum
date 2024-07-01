@@ -24,3 +24,14 @@ CREATE TABLE Post(
      PRIMARY KEY(id),
      FOREIGN KEY(user_id) REFERENCES Users(id)
 );
+
+CREATE TABLE Comment (
+     id INT NOT NULL AUTO_INCREMENT,
+     content VARCHAR(2048) NOT NULL,
+     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+     user_id INT NOT NULL,
+     post_id INT NOT NULL,
+     FOREIGN KEY (user_id) REFERENCES Users(id),
+     FOREIGN KEY (post_id) REFERENCES Post(id)
+);
