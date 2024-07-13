@@ -24,6 +24,12 @@ public class RawUserService {
     @Transactional
     public User createUser(String username, String email, String password, String introduction, Integer age, String link, String role) {
         // role이 admin이면 throw / role이 null이면 user로
+        if ("admin".equalsIgnoreCase(role)) {
+            throw new IllegalArgumentException("Role cannot be admin");
+        }
+        if (role == null) {
+            role = "user";
+        }
 
         User user = User.builder()
             .username(username)
