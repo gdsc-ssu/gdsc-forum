@@ -48,4 +48,9 @@ public class RawUserService {
 
         return user;
     }
+
+    // 로그인한 사용자 정보를 조회하는 메서드
+    public Optional<User> getUserById(Integer id) {
+        return userRepository.findById(id);
+    }
 }
