@@ -24,6 +24,12 @@ public class RawUserService {
     @Transactional
     public User createUser(String username, String email, String password, String introduction, Integer age, String link, String role) {
         // role이 admin이면 throw / role이 null이면 user로
+        if ("admin".equalsIgnoreCase(role)) {
+            throw new IllegalArgumentException("Role cannot be admin");
+        }
+        if (role == null) {
+            role = "user";
+        }
 
         User user = User.builder()
             .username(username)
@@ -34,12 +40,15 @@ public class RawUserService {
             .link(link)
             .role(role)
             .refreshToken(null)
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
             .build();
 
         user = userRepository.save(user);
 
         return user;
+    }
+
+    // 로그인한 사용자 정보를 조회하는 메서드
+    public Optional<User> getUserById(Integer id) {
+        return userRepository.findById(id);
     }
 }

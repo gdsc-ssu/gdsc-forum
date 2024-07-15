@@ -1,7 +1,9 @@
 package com.example.gdscforum.domain.post.entity;
 
+import com.example.gdscforum.common.entity.BaseTimeEntity;
 import com.example.gdscforum.domain.user.entity.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,28 +16,27 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "post")
-public class Post {
+public class Post extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, length = 256)
+    @NotEmpty
+    @Column(name = "title", nullable = false, length = 256)
     private String title;
 
-    @Column(nullable = false, length = 2048)
+    @NotEmpty
+    @Column(name="content", nullable = false, length = 2048)
     private String content;
 
-    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime updatedAt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Builder
-    public Post(String title, String content, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Post(String title, String content, User user) {
         this.title = title;
         this.content = content;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.user = user;
     }
 }

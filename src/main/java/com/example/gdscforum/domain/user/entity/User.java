@@ -1,5 +1,6 @@
 package com.example.gdscforum.domain.user.entity;
 
+import com.example.gdscforum.common.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -42,14 +43,8 @@ public class User {
     @Column(length = 1024)
     private String refreshToken;
 
-    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime updatedAt;
-
     @Builder
-    public User(String username, String email, String password, String introduction, Integer age, String link, String role, String refreshToken, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User (String username, String email, String password, String introduction, Integer age, String link, String role, String refreshToken) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -58,7 +53,5 @@ public class User {
         this.link = link;
         this.role = role;
         this.refreshToken = refreshToken;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 }

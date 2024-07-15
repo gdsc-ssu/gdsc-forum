@@ -30,6 +30,9 @@ spring:
       schema-locations: classpath:db-init-scripts/schema.sql
       data-locations: classpath:db-init-scripts/data.sql
 
+  profiles:
+    active: dev
+
 app:
   jwt:
     accessTokenValidMS: 3600000  # 1시간
