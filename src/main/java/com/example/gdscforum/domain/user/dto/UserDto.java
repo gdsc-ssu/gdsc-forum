@@ -4,6 +4,8 @@ import com.example.gdscforum.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 public class UserDto {
@@ -14,6 +16,8 @@ public class UserDto {
     private Integer age;
     private String link;
     private String role;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public static UserDto from(User user) {
         return UserDto.builder()
@@ -24,6 +28,8 @@ public class UserDto {
                 .age(user.getAge())
                 .link(user.getLink())
                 .role(user.getRole())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
                 .build();
     }
 }
