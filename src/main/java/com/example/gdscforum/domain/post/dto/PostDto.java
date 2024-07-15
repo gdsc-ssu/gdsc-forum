@@ -1,6 +1,7 @@
 package com.example.gdscforum.domain.post.dto;
 
 import com.example.gdscforum.domain.post.entity.Post;
+import com.example.gdscforum.domain.user.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class PostDto {
     private String content;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private UserDto user;
 
     public static PostDto from(Post post) {
         return PostDto.builder()
@@ -27,6 +29,7 @@ public class PostDto {
             .content(post.getContent())
             .createdAt(post.getCreatedAt())
             .updatedAt(post.getUpdatedAt())
+            .user(UserDto.from(post.getUser()))
             .build();
     }
 

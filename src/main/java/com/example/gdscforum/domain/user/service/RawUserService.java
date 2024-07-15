@@ -40,8 +40,6 @@ public class RawUserService {
             .link(link)
             .role(role)
             .refreshToken(null)
-            .createdAt(LocalDateTime.now())
-            .updatedAt(LocalDateTime.now())
             .build();
 
         user = userRepository.save(user);
