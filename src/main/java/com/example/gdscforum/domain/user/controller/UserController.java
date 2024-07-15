@@ -20,7 +20,7 @@ public class UserController {
 
     @Operation(
             summary = "로그인 한 유저 정보 조회",
-            description = "Authorization 헤더의 토큰에서 id를 파싱해 현재 로그인 한 유저의 정보를 반환합니다."
+            description = "현재 로그인 한 유저의 정보를 반환합니다."
     )
     @GetMapping
     public Response<UserDto> getLoggedInUser() {
