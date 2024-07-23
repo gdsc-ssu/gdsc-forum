@@ -1,6 +1,6 @@
-package com.example.gdscforum.domain.post.entity;
+package com.example.gdscforum.domain.comment.entity;
 
-import com.example.gdscforum.domain.comment.entity.Comment;
+import com.example.gdscforum.domain.post.entity.Post;
 import com.example.gdscforum.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -9,23 +9,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "post")
-public class Post {
+@Table(name = "comment")
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, length = 256)
-    private String title;
-
-    @Column(nullable = false, length = 2048)
+    @Column(name = "content", length = 2048, nullable = false)
     private String content;
 
     @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -35,23 +30,20 @@ public class Post {
     private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id")
-    private List<Comment> comments = new ArrayList<>();
+    // TODO: 필요할까? Post에 comments가 있어 양방향 연관관계가 된다.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", nullable = false)
+    private Post post;
 
     @Builder
-    public Post(String title, String content, User user, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.title = title;
+    public Comment(String content, User user, Post post, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.content = content;
         this.user = user;
+        this.post = post;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-    }
-
-    public void addComment(Comment comment) {
-        this.comments.add(comment);
     }
 }

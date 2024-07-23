@@ -3,6 +3,7 @@ package com.example.gdscforum.domain.post.controller;
 import com.example.gdscforum.common.dto.Response;
 import com.example.gdscforum.common.security.jwt.JwtService;
 import com.example.gdscforum.domain.post.controller.request.CreatePostRequest;
+import com.example.gdscforum.domain.post.controller.request.UpdatePostRequest;
 import com.example.gdscforum.domain.post.controller.response.GetPostResponse;
 import com.example.gdscforum.domain.post.dto.PostDto;
 import com.example.gdscforum.domain.post.service.PostService;
@@ -48,7 +49,9 @@ public class PostController {
     )
     @PostMapping
     public Response<GetPostResponse> createPost(@Valid @RequestBody CreatePostRequest request) {
-        PostDto post = postService.createPost(request.getTitle(), request.getContent());
+        Integer userId = jwtService.getTokenDto().getUserId();
+
+        PostDto post = postService.createPost(request.getTitle(), request.getContent(), userId);
 
         return Response.data(GetPostResponse.from(post));
     }
@@ -58,7 +61,7 @@ public class PostController {
         description = "게시글을 수정합니다."
     )
     @PutMapping("/{id}")
-    public Response<GetPostResponse> updatePost(@PathVariable Integer id, @Valid @RequestBody CreatePostRequest request) {
+    public Response<GetPostResponse> updatePost(@PathVariable Integer id, @Valid @RequestBody UpdatePostRequest request) {
         PostDto post = postService.updatePost(id, request.getTitle(), request.getContent());
 
         return Response.data(GetPostResponse.from(post));
@@ -73,5 +76,18 @@ public class PostController {
         postService.deletePost(id);
 
         return Response.data("OK");
+    }
+
+    @Operation(
+        summary = "내가 작성한 게시글 조회",
+        description = "내가 작성한 게시글을 조회합니다."
+    )
+    @GetMapping("/my")
+    public Response<List<GetPostResponse>> listMyPosts() {
+        Integer userId = jwtService.getTokenDto().getUserId();
+
+        List<PostDto> posts = postService.listPostsByUserId(userId);
+
+        return Response.data(GetPostResponse.from(posts));
     }
 }

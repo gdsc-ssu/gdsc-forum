@@ -1,0 +1,58 @@
+# docker compose
+# 파일 경로에서 docker-compose -p gdsc-forum up -d
+version: '3.0'
+
+services:
+  gdsc_forum_application:
+    image: gdsc-forum-application:linux-potgresql
+    container_name: gdsc-forum-application
+    hostname: gdsc-forum-application
+    networks:
+      - gdsc_forum_network
+    # 서비스 배포 및 실행 옵션
+    deploy:
+      # 조건을 만족하는 Node에서만 실행
+      placement:
+        constraints:
+          - node.role==manager
+    environment:
+      TZ: Asia/Seoul
+      SPRING_PROFILES_ACTIVE: local
+    # 컨테이너 상태 체크
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/dev/ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  gdsc_forum_db:
+    image: postgres:16-alpine
+    container_name: gdsc-forum-db
+    hostname: gdsc-forum-db
+    networks:
+      - gdsc_forum_network
+    # 서비스 배포 및 실행 옵션
+    environment:
+      TZ: Asia/Seoul
+      POSTGRES_USER: gdsc-forum
+      POSTGRES_PASSWORD: gdsc-forum
+    # 컨테이너 상태 체크
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - gdsc_forum_db_volume:/var/lib/postgresql/data
+      - ./init-database/gdsc-forum.sql:/docker-entrypoint-initdb.d/gdsc-forum.sql
+
+# 도커 볼륨
+volumes:
+  gdsc_forum_db_volume:
+
+networks:
+  gdsc_forum_network:
+    driver: bridge

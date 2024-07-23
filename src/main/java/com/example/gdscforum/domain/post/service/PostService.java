@@ -2,6 +2,7 @@ package com.example.gdscforum.domain.post.service;
 
 import com.example.gdscforum.domain.post.dto.PostDto;
 import com.example.gdscforum.domain.post.entity.Post;
+import com.example.gdscforum.domain.post.exception.PostNotFoundException;
 import com.example.gdscforum.domain.post.repository.PostRepository;
 import com.example.gdscforum.domain.user.entity.User;
 import com.example.gdscforum.domain.user.service.RawUserService;
@@ -17,12 +18,19 @@ import java.util.List;
 @Service
 public class PostService {
     private final PostRepository postRepository;
+    private final RawUserService rawUserService;
 
     public PostDto getPostById(Integer id) {
         Post post = postRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+            .orElseThrow(PostNotFoundException::new);
 
         return PostDto.from(post);
+    }
+
+    public List<PostDto> listPostsByIds(List<Integer> ids) {
+        List<Post> posts = postRepository.findAllById(ids);
+
+        return PostDto.from(posts);
     }
 
     public List<PostDto> listPosts() {
@@ -32,8 +40,10 @@ public class PostService {
     }
 
     @Transactional
-    public PostDto createPost(String title, String content) {
-        Post post = new Post(title, content, LocalDateTime.now(), LocalDateTime.now());
+    public PostDto createPost(String title, String content, Integer userId) {
+        User user = rawUserService.getUserById(userId);
+
+        Post post = new Post(title, content, user, LocalDateTime.now(), LocalDateTime.now());
         post = postRepository.save(post);
 
         return PostDto.from(post);
@@ -42,7 +52,7 @@ public class PostService {
     @Transactional
     public PostDto updatePost(Integer id, String title, String content) {
         Post post =  postRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+            .orElseThrow(PostNotFoundException::new);
 
         post.setTitle(title);
         post.setContent(content);
@@ -56,8 +66,14 @@ public class PostService {
     @Transactional
     public void deletePost(Integer id) {
         Post post =  postRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+            .orElseThrow(PostNotFoundException::new);
 
         postRepository.delete(post);
+    }
+
+    public List<PostDto> listPostsByUserId(Integer userId) {
+        List<Post> posts = postRepository.findByUserId(userId);
+
+        return PostDto.from(posts);
     }
 }

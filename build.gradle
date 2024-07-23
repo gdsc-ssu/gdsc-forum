@@ -33,6 +33,10 @@ dependencies {
 
     // Database
     implementation 'com.h2database:h2'
+    runtimeOnly 'org.postgresql:postgresql'
+
+    // Auth
+    implementation 'com.auth0:java-jwt:4.3.0'
 
     // Auth
     implementation 'com.auth0:java-jwt:4.3.0'

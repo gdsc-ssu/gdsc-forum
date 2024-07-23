@@ -1,6 +1,7 @@
 package com.example.gdscforum.domain.user.service;
 
 import com.example.gdscforum.domain.user.entity.User;
+import com.example.gdscforum.domain.user.exception.UserNotFoundException;
 import com.example.gdscforum.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,5 +42,11 @@ public class RawUserService {
         user = userRepository.save(user);
 
         return user;
+    }
+
+    // controller 사용 금지
+    public User getUserById(Integer id) {
+        return userRepository.findById(id)
+            .orElseThrow(UserNotFoundException::new);
     }
 }

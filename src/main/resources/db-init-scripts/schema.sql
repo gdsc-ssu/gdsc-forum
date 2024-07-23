@@ -1,5 +1,5 @@
 CREATE TABLE Users(
-      id INT NOT NULL AUTO_INCREMENT,
+      id SERIAL NOT NULL,
       username VARCHAR(256) NOT NULL,
       email VARCHAR(256) NOT NULL,
       password VARCHAR(256) NOT NULL,
@@ -15,10 +15,23 @@ CREATE TABLE Users(
 
 
 CREATE TABLE Post(
-     id INT NOT NULL AUTO_INCREMENT,
+     id SERIAL NOT NULL,
      title VARCHAR(256) NOT NULL,
      content VARCHAR(2048) NOT NULL,
      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
      updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-     PRIMARY KEY(id)
+     user_id INT NOT NULL,
+     PRIMARY KEY(id),
+     FOREIGN KEY(user_id) REFERENCES Users(id)
+);
+
+CREATE TABLE Comment (
+     id SERIAL NOT NULL,
+     content VARCHAR(2048) NOT NULL,
+     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+     user_id INT NOT NULL,
+     post_id INT NOT NULL,
+     FOREIGN KEY (user_id) REFERENCES Users(id),
+     FOREIGN KEY (post_id) REFERENCES Post(id)
 );
