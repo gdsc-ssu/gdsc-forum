@@ -18,7 +18,7 @@ public class DevController {
         summary = "Ping 테스트",
         responses = @ApiResponse(responseCode = "200", description = "pong을 반환합니다.")
     )
-    @GetMapping("ping")
+    @GetMapping("/ping")
     public Response<String> ping() {
         return Response.data("pong");
     }

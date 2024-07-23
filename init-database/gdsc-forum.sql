@@ -1,0 +1,1 @@
+CREATE DATABASE gdsc_forum;
